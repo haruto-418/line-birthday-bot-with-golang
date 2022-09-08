@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
-	"time"
 
+	"github.com/haruto-418/line-birthday-bot-with-golang/db"
+	"github.com/haruto-418/line-birthday-bot-with-golang/db/controllers"
+	"github.com/haruto-418/line-birthday-bot-with-golang/utils"
 	"github.com/joho/godotenv"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
@@ -13,14 +16,10 @@ const testData="2000-09-07"
 
 
 func main(){
-	location,_:=time.LoadLocation("Asia/Tokyo")
-	var is_celebrating bool = false
-	month:=time.Now().In(location).Month()
-	day:=time.Now().In(location).Day()
-	target,_:=time.ParseInLocation("2006-01-02",testData,location)
-	if month==target.Month() && day==target.Day(){
-		is_celebrating=true
-	}
+	is_celebrating:=utils.IsCelebrating(testData)
+	db:=db.ConnectDb()
+	users:=controllers.GetUsers(db)
+	fmt.Println(users)
 	if is_celebrating{
 		// 一致する場合はline bot を起動。
 		if err:=godotenv.Load(".env"); err!=nil{

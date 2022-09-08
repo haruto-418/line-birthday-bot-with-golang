@@ -3,7 +3,7 @@ package controllers
 import (
 	"log"
 
-	"github.com/haruto-418/line-birthday-bot-with-golang/db/models"
+	"github.com/haruto-418/line-birthday-bot-with-golang/database/models"
 	"gorm.io/gorm"
 )
 

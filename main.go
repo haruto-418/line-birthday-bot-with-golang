@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
+	"time"
 
-	"github.com/haruto-418/line-birthday-bot-with-golang/db"
-	"github.com/haruto-418/line-birthday-bot-with-golang/db/controllers"
-	"github.com/haruto-418/line-birthday-bot-with-golang/utils"
+	db "github.com/haruto-418/line-birthday-bot-with-golang/database"
+	"github.com/haruto-418/line-birthday-bot-with-golang/database/models"
 	"github.com/joho/godotenv"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
@@ -16,12 +15,16 @@ const testData="2000-09-07"
 
 
 func main(){
-	is_celebrating:=utils.IsCelebrating(testData)
 	db:=db.ConnectDb()
-	users:=controllers.GetUsers(db)
-	fmt.Println(users)
-	if is_celebrating{
-		// 一致する場合はline bot を起動。
+	mysql_db,_:=db.DB()
+	defer mysql_db.Close()
+	users:= []models.User{}
+	t:=time.Now()
+	db.Where("birthday = ?",t.Format("2006-01-02")).Find(&users)
+	if len(users)==0{
+		// 誕生日の人はいないから何も実行しない。
+	}else{
+		// 誕生日の人がいるから実行。	
 		if err:=godotenv.Load(".env"); err!=nil{
 			log.Fatal(err)
 		}
@@ -37,5 +40,6 @@ func main(){
 			log.Fatal(err)
 		}
 	}
+	
 }
 

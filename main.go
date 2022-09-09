@@ -24,16 +24,16 @@ func main(){
 	if len(users)==0{
 		// 誕生日の人はいないから何も実行しない。
 	}else{
-		// 誕生日の人がいるから実行。	
+		// 誕生日の人がいるなら実行。	
 		if err:=godotenv.Load(".env"); err!=nil{
 			log.Fatal(err)
 		}
-		bot,err:=linebot.New(
+		bot,bot_err:=linebot.New(
 			os.Getenv("LINE_BOT_CHANNEL_SECRET"),
 			os.Getenv("LINE_BOT_CHANNEL_TOKEN"),
 		)
-		if err!=nil{
-			log.Fatal(err)
+		if bot_err!=nil{
+			log.Fatal(bot_err)
 		}
 		message:=linebot.NewTextMessage("hello")
 		if _,err:=bot.BroadcastMessage(message).Do(); err!=nil{

@@ -42,9 +42,9 @@ func CreateUsers(db *gorm.DB,count uint8){
 	}
 }
 
-// func DeleteAllUsers(db *gorm.DB){
-// 	mysql_db,_:=db.DB()
-// 	defer mysql_db.Close()
-// 	user:=models.User{}
-// 	db.Delete(&user)
-// }
+func DeleteAllUsers(db *gorm.DB){
+	mysql_db,_:=db.DB()
+	defer mysql_db.Close()
+	user:=models.User{}
+	db.Delete(&user)
+}

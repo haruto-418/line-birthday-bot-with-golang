@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -11,7 +12,6 @@ import (
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
-const testData="2000-09-07"
 
 
 func main(){
@@ -22,8 +22,10 @@ func main(){
 	t:=time.Now()
 	db.Where("birthday = ?",t.Format("2006-01-02")).Find(&users)
 	if len(users)==0{
+		fmt.Println("no one is celebrating.")
 		// 誕生日の人はいないから何も実行しない。
 	}else{
+		fmt.Println(users)
 		// 誕生日の人がいるなら実行。	
 		if err:=godotenv.Load(".env"); err!=nil{
 			log.Fatal(err)

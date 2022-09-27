@@ -25,6 +25,7 @@ func main(){
 		fmt.Println("no one is celebrating.")
 		// 誕生日の人はいないから何も実行しない。
 	}else{
+		// 誕生日の人がいるなら実行。
 		var birthday_users []string
 		for _,user:=range users{
 			birthday_users=append(birthday_users, user.UserName)
@@ -35,7 +36,6 @@ func main(){
 		}else{
 			users_text+=users_text+"氏"
 		}
-		// 誕生日の人がいるなら実行。
 		bot:=utils.InitBot()
 		message_text:=utils.GenerateMessage(users_text)
 		message:=linebot.NewTextMessage(message_text)

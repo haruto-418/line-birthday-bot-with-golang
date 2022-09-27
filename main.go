@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
+	"strings"
 	"time"
 
 	db "github.com/haruto-418/line-birthday-bot-with-golang/database"
 	"github.com/haruto-418/line-birthday-bot-with-golang/database/models"
-	"github.com/joho/godotenv"
+	"github.com/haruto-418/line-birthday-bot-with-golang/utils"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
@@ -25,23 +25,23 @@ func main(){
 		fmt.Println("no one is celebrating.")
 		// 誕生日の人はいないから何も実行しない。
 	}else{
-		fmt.Println(users)
-		// 誕生日の人がいるなら実行。	
-		if err:=godotenv.Load(".env"); err!=nil{
-			log.Fatal(err)
+		var birthday_users []string
+		for _,user:=range users{
+			birthday_users=append(birthday_users, user.UserName)
 		}
-		bot,bot_err:=linebot.New(
-			os.Getenv("LINE_BOT_CHANNEL_SECRET"),
-			os.Getenv("LINE_BOT_CHANNEL_TOKEN"),
-		)
-		if bot_err!=nil{
-			log.Fatal(bot_err)
+		var users_text string
+		if len(birthday_users)>1{
+			users_text=strings.Join(birthday_users,"氏と")
+		}else{
+			users_text+=users_text+"氏"
 		}
-		message:=linebot.NewTextMessage("hello")
+		// 誕生日の人がいるなら実行。
+		bot:=utils.InitBot()
+		message_text:=utils.GenerateMessage(users_text)
+		message:=linebot.NewTextMessage(message_text)
 		if _,err:=bot.BroadcastMessage(message).Do(); err!=nil{
 			log.Fatal(err)
 		}
 	}
-	
 }
 

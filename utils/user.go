@@ -3,6 +3,7 @@ package utils
 import (
 	"crypto/rand"
 	"log"
+	"time"
 
 	"github.com/haruto-418/line-birthday-bot-with-golang/database/models"
 	"gorm.io/gorm"
@@ -24,6 +25,18 @@ func CreateRandomUser(db *gorm.DB,count uint8){
 		}
 		random_date:=GenerateRandomDate()
 		user:=models.User{UserName: user_name,Birthday: random_date}
+		db.Create(&user)
+		i++
+	}
+}
+
+func CreateUsers(db *gorm.DB,count uint8){
+	mysql_db,_:=db.DB()
+	defer mysql_db.Close()
+	var i uint8=0
+	for i<count{
+		t:=time.Now()
+		user:=models.User{UserName: "sample",Birthday: t}
 		db.Create(&user)
 		i++
 	}

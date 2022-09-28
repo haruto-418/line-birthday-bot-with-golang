@@ -34,7 +34,7 @@ func main(){
 		if len(birthday_users)>1{
 			users_text=strings.Join(birthday_users,"氏と")
 		}else{
-			users_text+=users_text+"氏"
+			users_text=birthday_users[0]+"氏"
 		}
 		bot:=utils.InitBot()
 		message_text:=utils.GenerateMessage(users_text)

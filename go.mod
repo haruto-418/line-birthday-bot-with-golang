@@ -6,7 +6,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	gorm.io/driver/mysql v1.3.6
-	gorm.io/gorm v1.23.8
+	gorm.io/gorm v1.23.10
 )
 
 require (

@@ -9,7 +9,7 @@ import (
 	db "github.com/haruto-418/line-birthday-bot-with-golang/database"
 	"github.com/haruto-418/line-birthday-bot-with-golang/database/models"
 	"github.com/haruto-418/line-birthday-bot-with-golang/utils"
-	"github.com/line/line-bot-sdk-go/linebot"
+	"github.com/line/line-bot-sdk-go/v7/linebot"
 )
 
 

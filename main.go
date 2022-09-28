@@ -20,7 +20,8 @@ func main(){
 	defer mysql_db.Close()
 	users:= []models.User{}
 	t:=time.Now()
-	db.Where("birthday = ?",t.Format("2006-01-02")).Find(&users)
+	pattern:="%"+t.Format("01-02")
+	db.Where("birthday LIKE ?",pattern).Find(&users)
 	if len(users)==0{
 		fmt.Println("no one is celebrating.")
 		// 誕生日の人はいないから何も実行しない。
